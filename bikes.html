@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bike Showcase</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .bike-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .bike-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      width: 250px;
+      text-align: center;
+      padding: 15px;
+      transition: 0.3s;
+    }
+
+    .bike-card:hover {
+      transform: scale(1.02);
+    }
+
+    .bike-card img {
+      width: 100%;
+      border-radius: 8px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .bike-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .bike-card button {
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .bike-card button:hover {
+      background-color: #444;
+    }
+
+    .bike-details {
+      background: #fff;
+      margin: 20px;
+      padding: 20px;
+      border-top: 3px solid #1e1e1e;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    footer {
+      background: #1e1e1e;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏍️ Bike Showcase</h1>
+  </header>
+
+  <main>
+    <section class="bike-gallery" id="bikeGallery">
+      <!-- Bikes will be inserted here by JS -->
+    </section>
+
+    <section class="bike-details" id="bikeDetails">
+      <h2>Bike Details</h2>
+      <div id="detailsContent">Select a bike to see more information.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Bike Showcase. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const bikes = [
+      {
+        name: "Yamaha R15 V4",
+        price: "₹1.85 Lakh",
+        description: "Sporty performance bike with advanced features and stylish looks.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/49471/r15-v4-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Royal Enfield Classic 350",
+        price: "₹1.90 Lakh",
+        description: "A retro cruiser with timeless design and refined performance.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/109351/classic-350-right-front-three-quarter-10.jpeg"
+      },
+      {
+        name: "KTM Duke 250",
+        price: "₹2.39 Lakh",
+        description: "A streetfighter with aggressive design and excellent power-to-weight ratio.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/131141/duke-250-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Honda CB350RS",
+        price: "₹2.14 Lakh",
+        description: "Retro-modern styling with Honda reliability and smooth engine.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/105359/cb350rs-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Suzuki Gixxer SF",
+        price: "₹1.42 Lakh",
+        description: "Fully-faired, sporty commuter with a refined engine and stylish look.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/142003/gixxer-sf-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Bajaj Pulsar N250",
+        price: "₹1.50 Lakh",
+        description: "New-generation Pulsar with aggressive styling and powerful engine.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/123649/pulsar-n250-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "TVS Apache RTR 200 4V",
+        price: "₹1.48 Lakh",
+        description: "Track-ready performance bike with riding modes and slipper clutch.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/125825/apache-rtr-200-4v-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Hero Xpulse 200 4V",
+        price: "₹1.45 Lakh",
+        description: "Adventure tourer with off-road capability and fuel efficiency.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/123739/xpulse-200-4v-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "BMW G 310 R",
+        price: "₹2.90 Lakh",
+        description: "Premium street naked from BMW Motorrad, stylish and agile.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/109925/g-310-r-right-front-three-quarter.jpeg"
+      },
+      {
+        name: "Jawa 42",
+        price: "₹1.96 Lakh",
+        description: "Modern classic with distinctive looks and retro charm.",
+        image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/131187/42-right-front-three-quarter-6.jpeg"
+      }
+    ];
+
+    const gallery = document.getElementById('bikeGallery');
+    bikes.forEach((bike, index) => {
+      const bikeCard = document.createElement('div');
+      bikeCard.className = 'bike-card';
+      bikeCard.innerHTML = `
+        <img src="${bike.image}" alt="${bike.name}">
+        <h3>${bike.name}</h3>
+        <p>${bike.price}</p>
+        <button onclick="showDetails(${index})">View Details</button>
+      `;
+      gallery.appendChild(bikeCard);
+    });
+
+    function showDetails(index) {
+      const bike = bikes[index];
+      const detailsDiv = document.getElementById('detailsContent');
+      detailsDiv.innerHTML = `
+        <h3>${bike.name}</h3>
+        <img src="${bike.image}" style="width:300px; border-radius:10px;" />
+        <p><strong>Price:</strong> ${bike.price}</p>
+        <p><strong>Description:</strong> ${bike.description}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
